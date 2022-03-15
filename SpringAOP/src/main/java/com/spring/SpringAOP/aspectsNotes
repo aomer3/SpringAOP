@@ -1,0 +1,103 @@
+Aspect Oriented Programming (AOP)
+1. AOP is the process of applying external services (like transaction management, 
+   login,    security) to an application classes without modifying any class code or 
+   methods of       those classes 
+2. These external services are also called Cross Cutting Concerns b/c they could be 
+   applied to any layer of the MVC design pattern (UI layer, services layer, DAO layer)
+	a. service layer class = business class 
+
+AOP Terminology
+1. Aspect - the class that represents the external services
+	a. all of the services do not have to be in one aspect, they can be spread 	   
+	   across multiple aspects 
+2. Advice - a method defined inside the Aspect class, an implementation of an Aspect
+3. PointCut - expression language that points out which business class methods need 
+   an Advice
+	a. A PointCut does not tell which Advice is required by a particular method, it
+	   simply specifies whether a method needs or does not need an Advice (because
+	   not all of the methods of a class need Advices)
+4. JoinPoint - specifies which business class method needs exactly which Advice
+	a. joins the Advices to the pointCuts 
+5. Target - an object of the business class in which all of the Advices will be 
+   applied to. A target is an object of the business class that requires Advices
+6. Weaving - the process of applying the Advices to a Target using JoinPoints 
+	a. done by the Weaver - a special component in the container that does the
+	   Weaving
+7. Proxy - an object that is generated from the Weaving process 
+	a. the object contains the business logic methods along with the advice logic
+	   methods
+
+
+Pointcut
+1. Pointcut qualifies a business class method 
+2. To use pointcuts, you must:
+	a. use fully qualified names - package.class.method
+	b. access specifier 
+	c. return type
+	d. if it takes any parameters
+3. Symbols used with pointcut
+	a. *  = can be used with access specifiers, return types, packages, classes,
+	        and methods 
+            When used, means "anything" - any methods of this class, any classes
+            of this package, any access specifier, etc.
+	b. .. = when used at package level, means current package and any 
+	        subpackages
+            When used with parameters, means can have any paramter type and any
+            number of paramters 
+	pointcut examples: 
+	1. public void *Id() - method can start with anything but should end with "Id",
+	   and shouldn't have any parameters
+	2. public int *e*(..) - method can start with and end with anything but should 
+       have in it an "e". The method can have any number and any type of paramters 
+	3. public int get(..) - the method name should be exactly "get" but can have any
+       number of and any type of parameters 
+	4. public * *() - can have any return type, any method name, but should have no
+	   parameters and the access modifier should be public  
+	5. public int *(..) - can have any method name and any number of and any type of
+       paramters, but should return int and should have public access modifier 
+	6. public * com.app..*.get*() - must have a public access modifier, can have any
+       return type, the method can be in any class, the method should either be
+       in the app package or an app subpackage and the method name should start 
+       with get but can end with anything, and the method name shouldn't have any
+       parameters 
+	7. public * *(..) - should have access modifier, can be of any return type, can
+       have any method name, with any type or any number of paramters 
+
+AOP Implementations (most used and common frameworks that implement AOP)
+1. AspectJ
+2. Spring AOP
+3. JBoss AOP
+
+
+Spring AOP
+1. Uses AspectJ (open source framework) and Spring uses Aspect J in three ways:
+	a. AspectJ Annotation Driven - most popular and common way in modern
+	   applications
+	b. AspectJ XML Driven	
+	c. Classic Spring Proxy-Based AOP - outdated, Spring's traditional way of 
+	   implementing AOP
+
+
+AspectJ Annotation Driven
+1. @Aspect - makes a class an Aspect 
+2. Once a class is marked with @Apect, then we can use method (Advice) annotations. 
+   These Advice annotations will be applied to the Aspect class methods 
+	a. @Before - execute the Advice first before the business class method
+	b. @After - execute the Advice after the business class method is completed 
+	c. @AfterReturning - execute the Advice just before the business class returns a
+       value, the Advice can access the returned value
+	d. @Around - execute the Advice before the business class method and also after 
+       the business class method is completed 
+	e. @AfterThrowing - execute the Advice if the business class method throws an
+	   exception
+
+
+How to use Aspects
+1. Create the POJO class
+2. Create the aspect 
+3. Create the spring config file
+4. Create a test class 
+
+
+ 
+
